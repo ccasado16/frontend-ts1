@@ -1,12 +1,23 @@
 import React from "react";
+import { ToastContainer } from "react-toastify";
+import { AuthProvider } from "./context";
 import { Navigation } from "./routes";
 
 export default function App() {
   return (
-    <div>
-      <h1>Hello world, bitches!</h1>
-      <h2>Just testing...</h2>
+    <AuthProvider>
       <Navigation />
-    </div>
+
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+      />
+    </AuthProvider>
   );
 }
