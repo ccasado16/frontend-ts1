@@ -32,5 +32,3 @@ export function TopMenu() {
     </Menu>
   );
 }
-
-// metodos para la evaluacion de interfaces y prototipos
