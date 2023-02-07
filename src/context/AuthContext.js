@@ -20,7 +20,6 @@ export function AuthProvider(props) {
       if (token) {
         const me = await getMe(token);
         setAuth({ token, me });
-        console.log(me);
       } else {
         setAuth(null);
       }
