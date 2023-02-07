@@ -1,6 +1,6 @@
 .side-menu-admin {
   .ui.menu {
-    width: 250px !important;
+    width: 200px !important;
     overflow: hidden;
     padding-top: 4em;
     z-index: 99 !important;
@@ -16,6 +16,6 @@
     position: absolute;
     right: 0;
     padding: 20px;
-    width: calc(100% - 250px);
+    width: calc(100% - 200px);
   }
 }
