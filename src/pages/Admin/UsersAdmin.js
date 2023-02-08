@@ -11,7 +11,7 @@ import { Loader } from "semantic-ui-react";
 export function UsersAdmin() {
   const [titleModal, setTitleModal] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const { loading, users, getUsers } = useUser();
+  const { loading, users, getUsers, deleteUser } = useUser();
   const [refetch, setRefetch] = useState(false);
   const [contentModal, setContentModal] = useState(null);
 
@@ -42,6 +42,19 @@ export function UsersAdmin() {
     openCloseModal();
   };
 
+  const onDeleteUser = async (data) => {
+    const result = window.confirm(`¿Eliminar usuario ${data.email}?`);
+
+    if (result) {
+      try {
+        await deleteUser(data.id);
+        onRefetch();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <>
       <HeaderPage
@@ -54,7 +67,11 @@ export function UsersAdmin() {
           Cargando usuarios...
         </Loader>
       ) : (
-        <TableUsers users={users} updateUser={updateUser} />
+        <TableUsers
+          users={users}
+          updateUser={updateUser}
+          onDeleteUser={onDeleteUser}
+        />
       )}
 
       <BasicModal
