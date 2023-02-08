@@ -1,10 +1,10 @@
 import React from "react";
 import { Table, Button, Icon, Tab } from "semantic-ui-react";
-import { map } from "lodash";
+import { map, update } from "lodash";
 import "./TableUsers.scss";
 
 export function TableUsers(props) {
-  const { users } = props;
+  const { users, updateUser } = props;
   return (
     <Table className="table-users-admin">
       <Table.Header>
@@ -32,7 +32,8 @@ export function TableUsers(props) {
             <Table.Cell className="status">
               {user.is_active ? <Icon name="check" /> : <Icon name="close" />}
             </Table.Cell>
-            <Actions user={user} />
+
+            <Actions user={user} updateUser={updateUser} />
           </Table.Row>
         ))}
       </Table.Body>
@@ -41,10 +42,11 @@ export function TableUsers(props) {
 }
 
 function Actions(props) {
-  const { user } = props;
+  const { user, updateUser } = props;
+
   return (
     <Table.Cell textAlign="right">
-      <Button icon onClick={() => console.log(`Editar usuario ${user.email}`)}>
+      <Button icon onClick={() => updateUser(user)}>
         <Icon name="pencil" />
       </Button>
       <Button

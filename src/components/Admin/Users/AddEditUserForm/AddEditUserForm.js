@@ -6,16 +6,20 @@ import { useUser } from "../../../../hooks";
 import "./AddEditUserForm.scss";
 
 export function AddEditUserForm(props) {
-  const { onClose, onRefetch } = props;
-  const { addUser } = useUser();
+  const { onClose, onRefetch, user } = props;
+  const { addUser, updateUser } = useUser();
 
   const formik = useFormik({
-    initialValues: initialValues(),
-    validationSchema: Yup.object(validationSchema()),
+    initialValues: initialValues(user),
+    validationSchema: Yup.object(
+      user ? updateValidationSchema() : validationSchema()
+    ),
     validateOnChange: false,
     onSubmit: async (formValue) => {
       try {
-        await addUser(formValue);
+        if (user) await updateUser(user.id, formValue);
+        else await addUser(formValue);
+
         onRefetch();
         onClose();
       } catch (error) {
@@ -83,20 +87,25 @@ export function AddEditUserForm(props) {
         Usuario administrador (staff)
       </div>
 
-      <Button type="submit" primary fluid content="Crear usuario" />
+      <Button
+        type="submit"
+        primary
+        fluid
+        content={user ? "Actualizar" : "Crear usuario"}
+      />
     </Form>
   );
 }
 
-function initialValues() {
+function initialValues(user) {
   return {
-    first_name: "",
-    last_name: "",
-    username: "",
-    email: "",
+    first_name: user?.first_name || "",
+    last_name: user?.last_name || "",
+    username: user?.username || "",
+    email: user?.email || "",
     password: "",
-    is_active: true,
-    is_staff: false,
+    is_active: user?.is_active ? true : false,
+    is_staff: user?.is_staff ? true : false,
   };
 }
 
@@ -107,6 +116,18 @@ function validationSchema() {
     username: Yup.string().required(true),
     email: Yup.string().email(true).required(true),
     password: Yup.string().required(true),
+    is_active: Yup.bool().required(true),
+    is_staff: Yup.bool().required(true),
+  };
+}
+
+function updateValidationSchema() {
+  return {
+    first_name: Yup.string(),
+    last_name: Yup.string(),
+    username: Yup.string().required(true),
+    email: Yup.string().email(true).required(true),
+    password: Yup.string(),
     is_active: Yup.bool().required(true),
     is_staff: Yup.bool().required(true),
   };
