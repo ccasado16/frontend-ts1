@@ -13,7 +13,7 @@ export function CategoriesAdmin() {
   const [titleModal, setTitleModal] = useState(null);
   const [contenModal, setContenModal] = useState(null);
   const [refetch, setRefetch] = useState(false);
-  const { loading, categories, getCategories } = useCategory();
+  const { loading, categories, getCategories, deleteCategory } = useCategory();
 
   useEffect(() => {
     getCategories();
@@ -42,6 +42,15 @@ export function CategoriesAdmin() {
     openCloseModal();
   };
 
+  const _deleteCategory = async (data) => {
+    const result = window.confirm(`¿Eliminar categoria ${data.title}`);
+
+    if (result) {
+      await deleteCategory(data.id);
+      onRefetch();
+    }
+  };
+
   return (
     <>
       <HeaderPage
@@ -57,6 +66,7 @@ export function CategoriesAdmin() {
         <TableCategoryAdmin
           categories={categories}
           updateCategory={updateCategory}
+          deleteCategory={_deleteCategory}
         />
       )}
 
