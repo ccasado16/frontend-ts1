@@ -10,8 +10,23 @@
     cursor: pointer;
   }
 
+  .ui.label {
+    margin: 0;
+    font-size: 20px;
+    position: absolute;
+    top: 30px;
+  }
+
   svg {
     width: 200px;
     height: 200px;
+
+    &.busy {
+      fill: #bb7900;
+    }
+
+    &.pending {
+      fill: #0094e3;
+    }
   }
 }
