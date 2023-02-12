@@ -1,0 +1,52 @@
+import React, { useState, useEffect } from "react";
+import { size } from "lodash";
+import classNames from "classnames";
+import { Label, Button, Icon, Checkbox, Loader } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { ReactComponent as IconTable } from "../../../../assets/table.svg";
+import { getOrdersByTableApi } from "../../../../api/orders";
+import { ORDER_STATUS } from "../../../../utils/constants";
+import "./TableAdmin.scss";
+
+export function TableAdmin(props) {
+  const { table, reload } = props;
+
+  const [orders, setOrders] = useState([]);
+  const [tableBusy, setTableBusy] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const response = await getOrdersByTableApi(
+        table.id,
+        ORDER_STATUS.Pendiente
+      );
+      setOrders(response);
+    })();
+  }, [reload]);
+
+  useEffect(() => {
+    (async () => {
+      const response = await getOrdersByTableApi(
+        table.id,
+        ORDER_STATUS.Entregado
+      );
+
+      if (size(response) > 0) setTableBusy(response);
+      else setTableBusy(false);
+    })();
+  }, [reload]);
+
+  return (
+    <Link className="table-admin" to={`/admin/table/${table.id}`}>
+      {size(orders) > 0 ? (
+        <Label circular color="orange">
+          {size(orders)}
+        </Label>
+      ) : null}
+      <IconTable
+        className={classNames({ pending: size(orders) > 0, busy: tableBusy })}
+      />
+      <p>Mesa {table.number}</p>
+    </Link>
+  );
+}
