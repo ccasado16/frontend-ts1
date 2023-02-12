@@ -9,7 +9,7 @@ import { ORDER_STATUS } from "../../../../utils/constants";
 import "./TableAdmin.scss";
 
 export function TableAdmin(props) {
-  const { table } = props;
+  const { table, reload } = props;
 
   const [orders, setOrders] = useState([]);
   const [tableBusy, setTableBusy] = useState(false);
@@ -22,7 +22,7 @@ export function TableAdmin(props) {
       );
       setOrders(response);
     })();
-  }, []);
+  }, [reload]);
 
   useEffect(() => {
     (async () => {
@@ -34,7 +34,7 @@ export function TableAdmin(props) {
       if (size(response) > 0) setTableBusy(response);
       else setTableBusy(false);
     })();
-  }, []);
+  }, [reload]);
 
   return (
     <Link className="table-admin" to={`/admin/table/${table.id}`}>
