@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { size } from "lodash";
 import classNames from "classnames";
 import { Label, Button, Icon, Checkbox, Loader } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import { ReactComponent as IconTable } from "../../../../assets/table.svg";
 import { getOrdersByTableApi } from "../../../../api/orders";
 import { ORDER_STATUS } from "../../../../utils/constants";
@@ -36,7 +37,7 @@ export function TableAdmin(props) {
   }, []);
 
   return (
-    <div className="table-admin">
+    <Link className="table-admin" to={`/admin/table/${table.id}`}>
       {size(orders) > 0 ? (
         <Label circular color="orange">
           {size(orders)}
@@ -46,6 +47,6 @@ export function TableAdmin(props) {
         className={classNames({ pending: size(orders) > 0, busy: tableBusy })}
       />
       <p>Mesa {table.number}</p>
-    </div>
+    </Link>
   );
 }
