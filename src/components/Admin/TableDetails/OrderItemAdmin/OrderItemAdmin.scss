@@ -7,6 +7,14 @@
     align-items: center;
     justify-content: space-between;
 
+    &.pendiente {
+        background-color: rgb(255, 220, 155);
+    }
+
+    &.entregado {
+        background-color: rgb(183, 255, 155);
+    }
+
    &__time {
     position: absolute;
     top: -10px;
