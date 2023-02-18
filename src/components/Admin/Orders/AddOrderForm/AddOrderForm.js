@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Image, Button, Dropdown } from "semantic-ui-react";
-import { useProduct } from "../../../../hooks";
+import { useProduct, useOrder } from "../../../../hooks";
 import "./AddOrderForm.scss";
 import { map } from "lodash";
 import { useFormik } from "formik";
@@ -9,8 +9,9 @@ import * as Yup from "yup";
 export function AddOrderForm(props) {
   const [productsFormat, setProductsFormat] = useState([]);
   const [productsData, setProductsData] = useState([]);
-  const { idTable, openCloseModal } = props;
+  const { idTable, openCloseModal, onReloadOrders } = props;
   const { products, getProducts, getProductById } = useProduct();
+  const { addOrderToTable } = useOrder();
 
   useEffect(() => {
     getProducts();
@@ -25,8 +26,12 @@ export function AddOrderForm(props) {
     validationSchema: Yup.object(validationSchema()),
     validateOnChange: false,
     onSubmit: async (formData) => {
-      console.log("Creando pedidos");
-      console.log(formData);
+      for await (const idProduct of formData.products) {
+        await addOrderToTable(idTable, idProduct);
+      }
+
+      onReloadOrders();
+      openCloseModal();
     },
   });
 
