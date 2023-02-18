@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Loader } from "semantic-ui-react";
 import { useParams } from "react-router-dom";
-import { useOrder } from "../../hooks";
+import { useOrder, useTable } from "../../hooks";
 import { HeaderPage } from "../../components/Admin";
 import { ListOrderAdmin } from "../../components/Admin/TableDetails";
 
 export function TableDetailsAdmin() {
+  const [reloadOrders, setReloadOrders] = useState(false);
   const { id } = useParams();
   const { loading, orders, getOrdersByTable } = useOrder();
-  const [reloadOrders, setReloadOrders] = useState(false);
+  const { table, getTable } = useTable();
 
   useEffect(() => {
     getOrdersByTable(id, "", "ordering=-status,created_at");
-  }, [reloadOrders]);
+  }, [id, reloadOrders]);
+
+  useEffect(() => {
+    getTable(id);
+  }, [id]);
 
   const onReloadOrders = () => setReloadOrders((prev) => !prev);
 
   return (
     <>
-      <HeaderPage title={`Mesa ***`} />
+      <HeaderPage title={`Mesa ${table?.number || ""}`} />
 
       {loading ? (
         <Loader active inline="centered">
