@@ -5,6 +5,7 @@ import { useOrder, useTable } from "../../hooks";
 import { HeaderPage, AddOrderForm } from "../../components/Admin";
 import { ListOrderAdmin } from "../../components/Admin/TableDetails";
 import { BasicModal } from "../../components/Common";
+import { forEach } from "lodash";
 
 export function TableDetailsAdmin() {
   const [reloadOrders, setReloadOrders] = useState(false);
@@ -24,12 +25,39 @@ export function TableDetailsAdmin() {
   const onReloadOrders = () => setReloadOrders((prev) => !prev);
   const openCloseModal = () => setShowModal((prev) => !prev);
 
+  const onCreatePayment = async () => {
+    const result = window.confirm("¿Desea generar la cuenta de la mesa?");
+
+    if (result) {
+      let totalPayment = 0;
+
+      forEach(orders, (order) => {
+        totalPayment += Number(order.product_data.price);
+      });
+
+      const resultTypePayment = window.confirm(
+        `Para pagar con tarjeta pulse "Aceptar", para pagar en efectivo pulse "Cancelar".`
+      );
+
+      const paymentData = {
+        table: id,
+        totalPayment: totalPayment.toFixed(2),
+        paymentType: resultTypePayment ? "Tarjeta" : "Efectivo",
+        statusPayment: "Pendiente",
+      };
+
+      console.log(paymentData);
+    }
+  };
+
   return (
     <>
       <HeaderPage
         title={`Mesa ${table?.number || ""}`}
         btnTitle="Añadir pedido"
         btnClick={openCloseModal}
+        btnTitleTwo="Generar Cuenta"
+        btnClickTwo={onCreatePayment}
       />
 
       {loading ? (
