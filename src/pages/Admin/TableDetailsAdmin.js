@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Loader } from "semantic-ui-react";
 import { useParams } from "react-router-dom";
-import { useOrder, useTable } from "../../hooks";
+import { useOrder, useTable, usePayment } from "../../hooks";
 import { HeaderPage, AddOrderForm } from "../../components/Admin";
 import { ListOrderAdmin } from "../../components/Admin/TableDetails";
 import { BasicModal } from "../../components/Common";
@@ -11,8 +11,9 @@ export function TableDetailsAdmin() {
   const [reloadOrders, setReloadOrders] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const { id } = useParams();
-  const { loading, orders, getOrdersByTable } = useOrder();
+  const { loading, orders, getOrdersByTable, addPaymentToOrder } = useOrder();
   const { table, getTable } = useTable();
+  const { createPayment } = usePayment();
 
   useEffect(() => {
     getOrdersByTable(id, "", "ordering=-status,created_at");
@@ -41,12 +42,18 @@ export function TableDetailsAdmin() {
 
       const paymentData = {
         table: id,
-        totalPayment: totalPayment.toFixed(2),
-        paymentType: resultTypePayment ? "Tarjeta" : "Efectivo",
-        statusPayment: "Pendiente",
+        total_payment: totalPayment.toFixed(2),
+        payment_type: resultTypePayment ? "Tarjeta" : "Efectivo",
+        status: "Pendiente",
       };
 
-      console.log(paymentData);
+      const payment = await createPayment(paymentData);
+
+      for await (const order of orders) {
+        await addPaymentToOrder(order.id, payment.id);
+      }
+
+      onReloadOrders();
     }
   };
 
