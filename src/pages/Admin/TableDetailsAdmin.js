@@ -5,15 +5,16 @@ import { useOrder, useTable, usePayment } from "../../hooks";
 import { HeaderPage, AddOrderForm } from "../../components/Admin";
 import { ListOrderAdmin } from "../../components/Admin/TableDetails";
 import { BasicModal } from "../../components/Common";
-import { forEach } from "lodash";
+import { forEach, size } from "lodash";
 
 export function TableDetailsAdmin() {
   const [reloadOrders, setReloadOrders] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [paymentData, setPaymentData] = useState(null);
   const { id } = useParams();
   const { loading, orders, getOrdersByTable, addPaymentToOrder } = useOrder();
   const { table, getTable } = useTable();
-  const { createPayment } = usePayment();
+  const { createPayment, getPaymentByTable } = usePayment();
 
   useEffect(() => {
     getOrdersByTable(id, "", "ordering=-status,created_at");
@@ -22,6 +23,14 @@ export function TableDetailsAdmin() {
   useEffect(() => {
     getTable(id);
   }, [id]);
+
+  useEffect(() => {
+    (async () => {
+      const response = await getPaymentByTable(id);
+      // console.log(response);
+      if (size(response) > 0) setPaymentData(response[0]);
+    })();
+  }, [reloadOrders]);
 
   const onReloadOrders = () => setReloadOrders((prev) => !prev);
   const openCloseModal = () => setShowModal((prev) => !prev);
@@ -63,7 +72,7 @@ export function TableDetailsAdmin() {
         title={`Mesa ${table?.number || ""}`}
         btnTitle="Añadir pedido"
         btnClick={openCloseModal}
-        btnTitleTwo="Generar Cuenta"
+        btnTitleTwo={!paymentData ? "Generar cuenta" : null}
         btnClickTwo={onCreatePayment}
       />
 
