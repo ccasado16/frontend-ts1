@@ -3,7 +3,10 @@ import { Loader } from "semantic-ui-react";
 import { useParams } from "react-router-dom";
 import { useOrder, useTable, usePayment } from "../../hooks";
 import { HeaderPage, AddOrderForm } from "../../components/Admin";
-import { ListOrderAdmin } from "../../components/Admin/TableDetails";
+import {
+  ListOrderAdmin,
+  PaymentDetail,
+} from "../../components/Admin/TableDetails";
 import { BasicModal } from "../../components/Common";
 import { forEach, size } from "lodash";
 
@@ -70,7 +73,7 @@ export function TableDetailsAdmin() {
     <>
       <HeaderPage
         title={`Mesa ${table?.number || ""}`}
-        btnTitle="Añadir pedido"
+        btnTitle={paymentData ? "Ver cuenta" : "Añadir pedido"}
         btnClick={openCloseModal}
         btnTitleTwo={!paymentData ? "Generar cuenta" : null}
         btnClickTwo={onCreatePayment}
@@ -88,11 +91,20 @@ export function TableDetailsAdmin() {
         show={showModal}
         onClose={openCloseModal}
       >
-        <AddOrderForm
-          idTable={id}
-          openCloseModal={openCloseModal}
-          onReloadOrders={onReloadOrders}
-        />
+        {paymentData ? (
+          <PaymentDetail
+            payment={paymentData}
+            orders={orders}
+            openCloseModal={openCloseModal}
+            onReloadOrders={onReloadOrders}
+          />
+        ) : (
+          <AddOrderForm
+            idTable={id}
+            openCloseModal={openCloseModal}
+            onReloadOrders={onReloadOrders}
+          />
+        )}
       </BasicModal>
     </>
   );
