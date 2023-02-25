@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { createPaymentApi, getPaymentByTableApi } from "../api/payment";
+import {
+  closePaymentApi,
+  createPaymentApi,
+  getPaymentByTableApi,
+} from "../api/payment";
 
 export function usePayment() {
   const [error, setError] = useState(null);
@@ -20,5 +24,13 @@ export function usePayment() {
     }
   };
 
-  return { error, createPayment, getPaymentByTable };
+  const closePayment = async (idPayment) => {
+    try {
+      await closePaymentApi(idPayment);
+    } catch (error) {
+      setError(error);
+    }
+  };
+
+  return { error, createPayment, getPaymentByTable, closePayment };
 }

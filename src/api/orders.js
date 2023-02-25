@@ -59,7 +59,6 @@ export async function addOrderToTableApi(idTable, idProduct) {
   }
 }
 
-
 export async function addPaymentToOrderApi(idOrder, idPayment) {
   try {
     const url = `${BASE_API}api/orders/${idOrder}/`;
@@ -69,6 +68,23 @@ export async function addPaymentToOrderApi(idOrder, idPayment) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ payment: idPayment }),
+    };
+
+    await fetch(url, params);
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function closeOrderApi(idOrder) {
+  try {
+    const url = `${BASE_API}api/orders/${idOrder}/`;
+    const params = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ close: true }),
     };
 
     await fetch(url, params);

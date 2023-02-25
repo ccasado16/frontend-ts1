@@ -40,3 +40,19 @@ export async function getPaymentByTableApi(idTable) {
     throw error;
   }
 }
+
+export async function closePaymentApi(idPayment) {
+  try {
+    const url = `${BASE_API}api/payments/${idPayment}/`;
+    const params = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: PAYMENT_STATUS.Pagado }),
+    };
+    await fetch(url, params);
+  } catch (error) {
+    throw error;
+  }
+}
