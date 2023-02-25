@@ -75,7 +75,7 @@ export function TableDetailsAdmin() {
         title={`Mesa ${table?.number || ""}`}
         btnTitle={paymentData ? "Ver cuenta" : "Añadir pedido"}
         btnClick={openCloseModal}
-        btnTitleTwo={!paymentData ? "Generar cuenta" : null}
+        btnTitleTwo={size(orders) > 0 && !paymentData ? "Generar cuenta" : null}
         btnClickTwo={onCreatePayment}
       />
 
