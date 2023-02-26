@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Icon, Checkbox } from "semantic-ui-react";
-import { map, size } from "lodash";
+import { map } from "lodash";
 import { TableAdmin } from "../";
 import "./TablesListAdmin.scss";
 

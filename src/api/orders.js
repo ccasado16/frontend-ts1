@@ -37,7 +37,6 @@ export async function checkDeliveredOrderApi(id) {
   }
 }
 
-
 export async function addOrderToTableApi(idTable, idProduct) {
   try {
     const url = `${BASE_API}api/orders/`;

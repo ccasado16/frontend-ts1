@@ -84,7 +84,6 @@ export async function deleteProductApi(id, token) {
   }
 }
 
-
 export async function getProductByIdApi(id) {
   try {
     const url = `${BASE_API}api/products/${id}/`;

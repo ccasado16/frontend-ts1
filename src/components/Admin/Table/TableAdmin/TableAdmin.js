@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { size } from "lodash";
 import classNames from "classnames";
-import { Label, Button, Icon, Checkbox, Loader } from "semantic-ui-react";
+import { Label } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { ReactComponent as IconTable } from "../../../../assets/table.svg";
 import { getOrdersByTableApi } from "../../../../api/orders";

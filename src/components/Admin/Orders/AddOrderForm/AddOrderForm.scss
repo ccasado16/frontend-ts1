@@ -1,27 +1,26 @@
 .add-order-form {
+  &__list {
+    margin-top: 20px;
+    max-height: 400px !important;
+    overflow-y: auto;
 
-    &__list {
-        margin-top: 20px;
-        max-height: 400px !important;
-        overflow-y: auto;
+    &-product {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 10px;
 
-        &-product {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-bottom: 10px;
-
-            .ui.image {
-                margin-right: 20px !important;
-            }
-        }
-
-        &-product:last-child {
-            padding-bottom: 0;
-        }
+      .ui.image {
+        margin-right: 20px !important;
+      }
     }
 
-    .ui.primary.button {
-        margin-top: 30px;
+    &-product:last-child {
+      padding-bottom: 0;
     }
+  }
+
+  .ui.primary.button {
+    margin-top: 30px;
+  }
 }

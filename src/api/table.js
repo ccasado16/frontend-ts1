@@ -1,5 +1,4 @@
 import { BASE_API } from "../utils/constants";
-import { addProductApi } from "./product";
 
 export async function getTablesApi(token) {
   try {
@@ -100,7 +99,6 @@ export async function deleteTableApi(id, token) {
     throw error;
   }
 }
-
 
 export async function getTableApi(id) {
   try {
