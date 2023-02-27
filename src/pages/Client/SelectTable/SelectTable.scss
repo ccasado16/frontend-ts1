@@ -1,0 +1,41 @@
+.select-table {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: hsl(211, 50%, 83%);
+//   background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
+
+  &__content {
+    background-color: #ffffff;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.3);
+    width: 500px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+     
+    > h1 {
+        font-size: 30px;
+        margin-bottom: 30px;
+    }
+    > h2 {
+        margin: 0;
+        font-weight: normal;
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .ui.form {
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    &-error {
+        margin-top: 10px;
+        color: red;
+    }
+  }
+}

@@ -6,8 +6,10 @@ import {
   updateTableApi,
   deleteTableApi,
   getTableApi,
+  getTableByNumberApi,
 } from "../api/table";
 import { useAuth } from "./";
+import { size } from "lodash";
 
 export function useTable() {
   const [loading, setLoading] = useState(true);
@@ -74,6 +76,17 @@ export function useTable() {
     }
   };
 
+  const isExistTable = async (tableNumber) => {
+    try {
+      const response = await getTableByNumberApi(tableNumber);
+
+      if (size(response) > 0) return true;
+      throw Error();
+    } catch (error) {
+      setError(error);
+    }
+  };
+
   return {
     loading,
     error,
@@ -84,5 +97,6 @@ export function useTable() {
     updateTable,
     deleteTable,
     getTable,
+    isExistTable,
   };
 }
