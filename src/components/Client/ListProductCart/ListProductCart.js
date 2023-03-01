@@ -7,6 +7,17 @@ import "./ListProductCart.scss";
 
 export function ListProductCart(props) {
   const { products, onReloadCart } = props;
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    let totalTemp = 0;
+
+    forEach(products, (product) => {
+      totalTemp += Number(product.price);
+    });
+
+    setTotal(totalTemp.toFixed(2));
+  }, [products]);
 
   const removeProduct = (index) => {
     removeProductCartApi(index);
@@ -27,7 +38,7 @@ export function ListProductCart(props) {
       ))}
 
       <Button primary fluid>
-        Realizar pedido
+        Realizar pedido (s/. {total})
       </Button>
     </div>
   );
