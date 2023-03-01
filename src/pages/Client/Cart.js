@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { useProduct } from "../../hooks";
 import { getProductsCart } from "../../api/cart";
 import { size } from "lodash";
+import { ListProductCart } from "../../components/Client/ListProductCart/ListProductCart";
 
 export function Cart() {
   const [products, setProducts] = useState(null);
@@ -37,7 +38,7 @@ export function Cart() {
           </Link>
         </div>
       ) : (
-        <p>Lista de productos en el carrito</p>
+        <ListProductCart products={products} />
       )}
     </div>
   );
