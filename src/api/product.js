@@ -95,3 +95,16 @@ export async function getProductByIdApi(id) {
     throw error;
   }
 }
+
+export async function getProductsByCategoryApi(idCategory) {
+  try {
+    const categoryFilter = `category=${idCategory}`;
+    const url = `${BASE_API}api/products/?${categoryFilter}`;
+    const response = await fetch(url);
+    const result = await response.json();
+
+    return result;
+  } catch (error) {
+    throw error;
+  }
+}
