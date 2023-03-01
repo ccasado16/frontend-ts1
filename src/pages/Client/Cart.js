@@ -8,6 +8,7 @@ import { ListProductCart } from "../../components/Client/ListProductCart/ListPro
 
 export function Cart() {
   const [products, setProducts] = useState(null);
+  const [reloadCart, setReloadCart] = useState(false);
   const { getProductById } = useProduct();
   const { tableNumber } = useParams();
 
@@ -23,7 +24,9 @@ export function Cart() {
       }
       setProducts(productsArray);
     })();
-  }, []);
+  }, [reloadCart]);
+
+  const onReloadCart = () => setReloadCart((prev) => !prev);
 
   return (
     <div>
@@ -38,7 +41,7 @@ export function Cart() {
           </Link>
         </div>
       ) : (
-        <ListProductCart products={products} />
+        <ListProductCart products={products} onReloadCart={onReloadCart} />
       )}
     </div>
   );
