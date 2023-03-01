@@ -8,7 +8,6 @@ export function PaymentsHistory() {
   useEffect(() => {
     getPayments();
   }, []);
-  console.log(payments);
 
   return (
     <>
