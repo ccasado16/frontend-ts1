@@ -12,7 +12,11 @@ export function Categories() {
   return (
     <div>
       <h3>Categorias</h3>
-      {loading ? <p>Cargando</p> : <ListCategories categories={categories} />}
+      {loading ? (
+        <p>Cargando...</p>
+      ) : (
+        <ListCategories categories={categories} />
+      )}
     </div>
   );
 }
