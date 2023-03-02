@@ -97,7 +97,7 @@ export function AddEditProductForm(props) {
         {previewImage ? "Cambiar imagen" : "Subir imagen"}
       </Button>
       <input {...getInputProps()} />
-      <Image src={previewImage} />
+      <Image centered src={previewImage} />
 
       <Button
         type="submit"
