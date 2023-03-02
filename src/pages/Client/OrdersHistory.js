@@ -9,10 +9,11 @@ import { ConfirmModal } from "../../components/Common/ConfirmModal/ConfirmModal"
 export function OrdersHistory() {
   const [idTable, setIdTable] = useState(null);
   const [showTypePayment, setShowTypePayment] = useState(false);
+  const [isRequestAccount, setIsRequestAccount] = useState(false);
   const { loading, orders, getOrdersByTable, addPaymentToOrder } = useOrder();
   const { getTableByNumber } = useTable();
   const { tableNumber } = useParams();
-  const { createPayment } = usePayment();
+  const { createPayment, getPaymentByTable } = usePayment();
 
   useEffect(() => {
     (async () => {
@@ -23,6 +24,16 @@ export function OrdersHistory() {
       getOrdersByTable(idTableTemp, "", "ordering=-status,-created_at");
     })();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      if (idTable) {
+        const response = await getPaymentByTable(idTable);
+        setIsRequestAccount(response);
+      }
+    })();
+  }, []);
+  
 
   const onCreatePayment = async (paymentType) => {
     setShowTypePayment(false);
@@ -63,9 +74,13 @@ export function OrdersHistory() {
               primary
               fluid
               style={{ margin: "20px 0" }}
-              onClick={() => setShowTypePayment(true)}
+              onClick={() =>
+                size(isRequestAccount) === 0 && setShowTypePayment(true)
+              }
             >
-              Pedir la cuenta
+              {size(isRequestAccount) > 0
+                ? "La cuenta ya está pedida"
+                : "Pedir cuenta"}
             </Button>
           )}
 
