@@ -31,6 +31,9 @@ export function Cart() {
   return (
     <div>
       <h3>Carrito</h3>
+
+      <Link to={`/client/${tableNumber}`}>Volver a categorias</Link>
+
       {!products ? (
         <p>Cargando...</p>
       ) : size(products) === 0 ? (
