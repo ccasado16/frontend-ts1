@@ -13,7 +13,7 @@ export function Products() {
 
   return (
     <div>
-      <Link to={`/client/${tableNumber}`}>Volver a categoria</Link>
+      <Link to={`/client/${tableNumber}`}>Volver a categorias</Link>
 
       {loading ? <p>Cargando...</p> : <ListProducts products={products} />}
     </div>
