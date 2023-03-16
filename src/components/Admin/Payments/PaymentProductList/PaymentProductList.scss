@@ -1,0 +1,17 @@
+.payment-product-list {
+  &__product {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 20px;
+    padding-bottom: 10px;
+
+    .iu.image {
+      margin-right: 30px !important;
+    }
+  }
+
+  &__product:last-child {
+    padding-bottom: 0;
+  }
+}

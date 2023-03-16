@@ -1,0 +1,24 @@
+.top-menu-admin {
+  &__logo {
+    width: 200px;
+    background-color: #c4c4c4 !important;
+    margin: 0;
+    p {
+      font-weight: bold;
+      font-size: 1.3em;
+    }
+  }
+
+  p.greeting {
+    font-size: 1.2em;
+    margin: 0;
+
+    span.userName {
+      font-weight: bold;
+    }
+  }
+
+  i.icon {
+    margin: 0 !important;
+  }
+}
